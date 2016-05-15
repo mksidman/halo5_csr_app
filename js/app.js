@@ -139,7 +139,7 @@ $(document).ready(function() {
 
       $.ajax({
         type: "GET",
-        url: "http://localhost:3000/stats/h5/servicerecords/arena?players=" + gamerTagInput,
+        url: "http://halo5-api-relay.herokuapp.com/stats/h5/servicerecords/arena?players=" + gamerTagInput,
         headers: {
           "Ocp-Apim-Subscription-Key": subKey
         },
@@ -189,7 +189,7 @@ $(document).ready(function() {
           //grab player image
           $.ajax({
             type: "GET",
-            url: "http://localhost:3000/profile/h5/profiles/" + gamerTag + "/spartan",
+            url: "http://halo5-api-relay.herokuapp.com/profile/h5/profiles/" + gamerTag + "/spartan",
             headers: {
               "Ocp-Apim-Subscription-Key": subKey
             },
@@ -225,7 +225,7 @@ $(document).ready(function() {
       //retrieve stats for last match from inputted gamer
       $.ajax({
         type: "GET",
-        url: "http://localhost:3000/stats/h5/players/" + gamerTagInput + "/matches",
+        url: "http://halo5-api-relay.herokuapp.com/stats/h5/players/" + gamerTagInput + "/matches",
         headers: {
             "Ocp-Apim-Subscription-Key": subKey
         },
@@ -241,7 +241,7 @@ $(document).ready(function() {
           matchIdArray.forEach(function(matchId) {
             $.ajax({
               type: "GET",
-              url: "http://localhost:3000/stats/h5/arena/matches/" + matchId,
+              url: "http://halo5-api-relay.herokuapp.com/stats/h5/arena/matches/" + matchId,
               headers: {
                 "Ocp-Apim-Subscription-Key": subKey
               },
@@ -260,7 +260,7 @@ $(document).ready(function() {
 
                 $.ajax({
                   type: "GET",
-                  url: "http://localhost:3000/stats/h5/servicerecords/arena?players=" + gamerTagString,
+                  url: "http://halo5-api-relay.herokuapp.com/stats/h5/servicerecords/arena?players=" + gamerTagString,
                   headers: {
                     "Ocp-Apim-Subscription-Key": subKey
                   },
@@ -323,7 +323,7 @@ $(document).ready(function() {
                       //grab player image
                       $.ajax({
                         type: "GET",
-                        url: "http://localhost:3000/profile/h5/profiles/" + gamerTag + "/spartan",
+                        url: "http://halo5-api-relay.herokuapp.com/profile/h5/profiles/" + gamerTag + "/spartan",
                         headers: {
                           "Ocp-Apim-Subscription-Key": subKey
                         },
