@@ -1,0 +1,45 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.margin-top-20 {
+    margin-top:20px;
+}
+
+.small-container {
+    max-width: 600px;
+}
+
+.txt-center {
+    text-align:center;
+}
+
+.bold {
+    font-weight:bold;
+}
+
+.player-container {
+  padding:20px;
+	background-color:#FFF;
+	transition:all 0.3s linear;
+  border-radius: 25px;
+}
+
+.player-container:hover {
+  background-color:#DDD;
+	transition:all 0.3s ease-in-out;
+  border-radius: 25px;
+}
+
+.player-info {
+  background-color:#DDD;
+  padding:20px;
+  margin-top:20px;
+  border-color: black;
+  border: solid;
+  border-radius:25px;
+  -webkit-border-radius:25px;
+  -moz-border-radius:25px;
+}

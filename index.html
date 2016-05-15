@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Halo API Test</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    <script src="https://rawgit.com/flatiron/director/master/build/director.min.js"></script>
+
+    <script src="js/app.js"></script>
+
+    <!-- <script src="js/controllers/search_controller.js"></script>
+    <script src="js/controllers/login_controller.js"></script>
+    <script src="js/controllers/signup_controller.js"></script>
+    <script src="js/controllers/saved_controller.js"></script> -->
+  </head>
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand">Halo 5 CSR Matcher</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li id="searchLink"><a href="#search">Search</a></li>
+            <li id="savedLink"><a href="#saved">Saved</a></li>
+            <li id="loginLink"><a href="#login">Login</a></li>
+            <li id="signupLink"><a href="#signup">Signup</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li id="loginState"></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+    <div id="main-view"></div>
+
+    <!-- Login Page HTML -->
+    <script id="login-template" type="text/x-handlebars-template">
+
+      <!-- Login Form -->
+      <div class="container small-container">
+          <h2 class="txt-center">Login</h2>
+
+          <form id="login-form">
+            <div class="well margin-top-20">
+                <div class="bold">
+                    Email
+                </div>
+                <div class="margin-top-20">
+                    <input id="loginEmail" type="text" class="form-control" />
+                </div>
+                <div class="bold margin-top-20">
+                    Password
+                </div>
+                <div class="margin-top-20">
+                    <input id="loginPassword" type="password" class="form-control" />
+                </div>
+                <div class="margin-top-20 txt-center">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </div>
+          </form>
+          <!-- /Login Form -->
+
+      </div>
+    </script>
+    <!-- /Login Page HTML -->
+
+
+    <!-- Signup Page HTML -->
+    <script id="signup-template" type="text/x-handlebars-template">
+
+      <!-- Signup Form -->
+      <div class="container small-container">
+          <h2 class="txt-center">Sign Up</h2>
+
+          <form id="signup-form">
+            <div class="well margin-top-20">
+                <div class="bold">
+                    Email
+                </div>
+                <div class="margin-top-20">
+                    <input id="signupEmail" type="text" class="form-control" />
+                </div>
+                <div class="bold margin-top-20">
+                    Password
+                </div>
+                <div class="margin-top-20">
+                    <input id="signupPassword" type="password" class="form-control" />
+                </div>
+                <div class="margin-top-20 txt-center">
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+            </div>
+          </form>
+      </div>
+      <!-- /Signup Form -->
+    </script>
+    <!-- /Signup Page HTML -->
+
+
+    <!-- Search Page HTML -->
+    <script id="search-template" type="text/x-handlebars-template">
+
+      <div class="container">
+
+        <!--Search Form-->
+      	<div class="row margin-top-20 small-container center-block">
+      		<form id="player-search-form">
+      			<div class="col-sm-10">
+      				<input id="player-name" type="text" name="search" class="form-control" placeholder="Input your gamertag!" />
+      			</div>
+      			<div class="col-sm-2">
+      				<button type="submit" class="btn btn-primary btn-block">Submit</button>
+      			</div>
+      		</form>
+      	</div>
+  	    <!--/Search Form-->
+
+      <div id="search-results-container">
+
+    </script>
+    <!-- /Search Page HTML -->
+
+    <!--One Player Result-->
+    <script id="player-template" type="text/x-handlebars-template">
+      <div class="container margin-top-20 player-container">
+        <div class="col-sm-3">
+          <img src="{{spartanImage}}" class="img-responsive" />
+        </div>
+        <div>
+          <h2>{{gamerTag}}</h2>
+        </div>
+        <div>
+          <span class="bold">CSR: </span><span>{{csr}}</span>
+        </div>
+        <div>
+          <span class="bold">Total Kills: </span><span>{{totalKills}}</span>
+        </div>
+        <div>
+          <span class="bold">Total Games Won: </span><span>{{totalWon}}</span>
+        </div>
+        <div>
+          <span class="bold">Total Games Lost: </span><span>{{totalLost}}</span>
+        </div>
+        <div>
+          <span class="bold">Win Percentage: </span><span>{{winPercentage}}</span>
+        </div>
+          <div class="margin-top-20">
+            <button type="submit" class="btn btn-success save-player-button" data-tag="{{gamerTag}}">
+              <span class="glyphicon glyphicon-ok margin-right-5"></span>
+              Add Player
+            </button>
+          </div>
+      </div>
+    </script>
+    <!--/One Player Result-->
+
+
+    <!--Own Player Result-->
+    <script id="own-player-template" type="text/x-handlebars-template">
+      <div class="player-info">
+        <div class="row">
+          <div class="col-sm-4">
+            <img src="{{spartanImage}}" class="img-responsive" />
+          </div>
+          <div class="col-sm-8">
+            <div>
+              <h2>{{gamerTag}}</h2>
+            </div>
+            <div>
+              <span class="bold">CSR: </span><span>{{csr}}</span>
+            </div>
+            <div>
+              <span class="bold">Total Kills: </span><span>{{totalKills}}</span>
+            </div>
+            <div>
+              <span class="bold">Total Games Won: </span><span>{{totalWon}}</span>
+            </div>
+            <div>
+              <span class="bold">Total Games Lost: </span><span>{{totalLost}}</span>
+            </div>
+            <div>
+              <span class="bold">Win Percentage: </span><span>{{winPercentage}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+    <!--/Own Player Result-->
+
+
+
+    <!-- Saved Page HTML -->
+    <script id="saved-template" type="text/x-handlebars-template">
+
+      <div class="container">
+
+        <!--One Player Result-->
+        {{#each gamer}}
+  			<div class="container margin-top-20 player-container">
+          <div class="col-sm-3">
+            <img src="{{spartanImage}}" class="img-responsive" />
+          </div>
+          <div>
+            <h2>{{gamerTag}}</h2>
+          </div>
+          <div>
+            <span class="bold">CSR: </span><span>{{csr}}</span>
+          </div>
+          <div>
+            <span class="bold">Total Kills: </span><span>{{totalKills}}</span>
+          </div>
+          <div>
+            <span class="bold">Total Games Won: </span><span>{{totalWon}}</span>
+          </div>
+          <div>
+            <span class="bold">Total Games Lost: </span><span>{{totalLost}}</span>
+          </div>
+          <div>
+            <span class="bold">Win Percentage: </span><span>{{winPercentage}}</span>
+          </div>
+  					<div class="margin-top-20">
+  						<button type="submit" class="btn btn-danger remove-player-button" data-tag="{{@key}}">
+  							<span class="glyphicon glyphicon-remove margin-right-5"></span>
+  							Remove Player
+  						</button>
+  					</div>
+  			</div>
+  		</div>
+      {{/each}}
+      <!--/One Player Result-->
+
+    </script>
+    <!-- /Saved Page HTML -->
+
+  </body>
+</html>
