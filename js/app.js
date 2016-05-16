@@ -144,7 +144,7 @@ $(document).ready(function() {
           "Ocp-Apim-Subscription-Key": subKey
         },
         success: function(playerServiceRecord) {
-          // console.log(playerServiceRecord);
+          console.log(playerServiceRecord);
 
           var playerCsr = playerServiceRecord.Results[0].Result.ArenaStats.HighestCsrAttained.Csr;
           var gamerTag = playerServiceRecord.Results[0].Id;
@@ -250,7 +250,7 @@ $(document).ready(function() {
                 //save gamerTags from match in an array if != inputted gamerTag
                 var gamerTagArray = [];
                 gameStats.PlayerStats.forEach(function(playerObj) {
-                  if (playerObj.Player.Gamertag != gamerTagInput) {
+                  if (playerObj.Player.Gamertag.toLowerCase() != gamerTagInput.toLowerCase()) {
                     gamerTagArray.push(playerObj.Player.Gamertag);
                   }
                 });
@@ -366,6 +366,7 @@ $(document).ready(function() {
         },
         error: function() {
           console.log("Match retrieval failure.");
+          alert("The Halo 5 API could not find your gamertag.");
         }
       });
 
